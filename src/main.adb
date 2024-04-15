@@ -26,15 +26,12 @@ procedure Main is
          for i in 1 .. Item_Numbers loop
             Full_Storage.Seize;
             Access_Storage.Seize;
-
             Storage.Append ("item " & i'Img);
-            Put_Line ("Added item " & i'Img);
-
+            Put_Line ("Produced item " & i'Img);
             Access_Storage.Release;
             Empty_Storage.Release;
             delay 0.5;
          end loop;
-
       end Producer;
 
       task body Consumer is
@@ -42,18 +39,14 @@ procedure Main is
          for i in 1 .. Item_Numbers loop
             Empty_Storage.Seize;
             Access_Storage.Seize;
-
             declare
                item : String := First_Element (Storage);
             begin
-               Put_Line ("Took " & item);
+               Put_Line ("Consumered " & item);
             end;
-
             Storage.Delete_First;
-
             Access_Storage.Release;
             Full_Storage.Release;
-
             delay 2.0;
          end loop;
 
@@ -64,5 +57,5 @@ procedure Main is
       null;
    end Starter;
 begin
-   Starter (3, 10, 2);
+   Starter (3, 5, 2);
 end Main;
